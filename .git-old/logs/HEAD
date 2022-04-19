@@ -1,0 +1,11 @@
+0000000000000000000000000000000000000000 9cd652a0d664e180a71286766b3b93a7d04fe70f AbiPol <leo.polanco@gmail.com> 1645031247 +0000	clone: from https://github.gsissc.myatos.net/A101753/ReservaSalas-Backend.git
+9cd652a0d664e180a71286766b3b93a7d04fe70f 9cd652a0d664e180a71286766b3b93a7d04fe70f AbiPol <leo.polanco@gmail.com> 1645032277 +0000	checkout: moving from master to Desa-1
+9cd652a0d664e180a71286766b3b93a7d04fe70f 9cd652a0d664e180a71286766b3b93a7d04fe70f AbiPol <leo.polanco@gmail.com> 1645114102 +0000	checkout: moving from Desa-1 to master
+9cd652a0d664e180a71286766b3b93a7d04fe70f 9cd652a0d664e180a71286766b3b93a7d04fe70f AbiPol <leo.polanco@gmail.com> 1645118211 +0000	checkout: moving from master to Desa-1
+9cd652a0d664e180a71286766b3b93a7d04fe70f 9cd652a0d664e180a71286766b3b93a7d04fe70f AbiPol <leo.polanco@gmail.com> 1645118338 +0000	checkout: moving from Desa-1 to master
+9cd652a0d664e180a71286766b3b93a7d04fe70f f857bba09a4db0e3f7c2e07b2748b992e4115970 AbiPol <leo.polanco@gmail.com> 1645118444 +0000	commit: Incluir campo Activa en la tabla Reservas para indicar si una reserva esta activa o no
+f857bba09a4db0e3f7c2e07b2748b992e4115970 f857bba09a4db0e3f7c2e07b2748b992e4115970 AbiPol <leo.polanco@gmail.com> 1645460285 +0000	checkout: moving from master to DESA-1
+f857bba09a4db0e3f7c2e07b2748b992e4115970 e7220f82ff9064471e60af3b33d2eaeb862cf963 AbiPol <leo.polanco@gmail.com> 1645548385 +0000	commit: Añadir la entidad PAIS a formulario y Base de datos
+e7220f82ff9064471e60af3b33d2eaeb862cf963 f857bba09a4db0e3f7c2e07b2748b992e4115970 AbiPol <leo.polanco@gmail.com> 1645548402 +0000	checkout: moving from DESA-1 to master
+f857bba09a4db0e3f7c2e07b2748b992e4115970 e7220f82ff9064471e60af3b33d2eaeb862cf963 AbiPol <leo.polanco@gmail.com> 1645548419 +0000	merge DESA-1: Fast-forward
+e7220f82ff9064471e60af3b33d2eaeb862cf963 e7220f82ff9064471e60af3b33d2eaeb862cf963 AbiPol <leo.polanco@gmail.com> 1645549050 +0000	checkout: moving from master to DESA-1
