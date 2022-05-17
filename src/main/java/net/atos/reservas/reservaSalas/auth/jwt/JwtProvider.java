@@ -37,7 +37,7 @@ public class JwtProvider {
 
 		public String generateToken(Authentication authentication) {
 			UserAuth usuarioMain = (UserAuth) authentication.getPrincipal();
-			logger.info("UsuarioMain: " + usuarioMain);
+			//logger.info("UsuarioMain: " + usuarioMain);
 			return Jwts
 					.builder()
 					.setSubject(usuarioMain.getUsername())

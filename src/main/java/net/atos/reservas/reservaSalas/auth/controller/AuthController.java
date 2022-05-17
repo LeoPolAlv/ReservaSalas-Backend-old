@@ -1,7 +1,7 @@
 package net.atos.reservas.reservaSalas.auth.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ import net.atos.reservas.reservaSalas.auth.jwt.JwtProvider;
 @CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.GET, RequestMethod.DELETE }, exposedHeaders = "**")
 public class AuthController {
 
-	private final static Logger logger = LoggerFactory.getLogger(AuthController.class);
+	//private final static Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 	private final AuthenticationManager authenticationManager;
 	private final JwtProvider jwtProvider;
@@ -39,21 +39,27 @@ public class AuthController {
 
 	@PostMapping(path = "/login")
 	public ResponseEntity<?> login(@Validated @RequestBody AuthenticationRequest authenticationRequest) {
-		logger.info("Iniciamos Login");
+		/*logger.info("Iniciamos Login");
 		logger.info("Antes de autenticar manager");
-		logger.info("Authenticationrequest: " + authenticationRequest);
+		logger.info("Authenticationrequest: " + authenticationRequest);*/
 		//this.PasswordEncoderTest(authenticationRequest.getPassword());
+		
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-		logger.info("Autentication manager");
+		
+		//logger.info("Autentication manager");
+		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		logger.info("Autentication get context");
+		
+		//logger.info("Autentication get context");
 
 		String token = jwtProvider.generateToken(authentication);
-		logger.info("Token generado");
+		
+		//logger.info("Token generado");
+		
 		AuthenticationResponse respuesta = new AuthenticationResponse(true, token);
 
 		return new ResponseEntity<AuthenticationResponse>(respuesta, HttpStatus.OK);
-		//return new ResponseEntity<String>("Usuario existente en BD. Se enviara token", HttpStatus.OK);
+		
 	} 
 }

@@ -36,7 +36,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		try {
 			String token = getToken(req);
-			logger.info("Estamos en doFilter");
+			//logger.info("Estamos en doFilter");
 			/*
 			 * if (token == null ){ logger.info("token null"); filterChain.doFilter(req,
 			 * res); }
@@ -44,9 +44,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
 			if (token != null && jwtProvider.validateToken(token)) {
 				String nombreUsuario = jwtProvider.getNombreUsuarioFromToken(token);
-				logger.info("Nombre Usuario: " + nombreUsuario);
+				//logger.info("Nombre Usuario: " + nombreUsuario);
 				UserDetails userDetails = userAuthService.loadUserByUsername(nombreUsuario);
-				logger.info("UserDetails: " + userDetails);
+				//logger.info("UserDetails: " + userDetails);
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null,
 						userDetails.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(auth);
@@ -65,7 +65,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	// Metodo para obtener el token, sin el prefijo 'Bearer'
 		private String getToken(HttpServletRequest request) {
 			String header = request.getHeader("Authorization");
-			logger.error("header: " + header);
+			//logger.error("header: " + header);
 			// Si no es nulo y comienza por el prefijo 'Bearer'
 			if (header != null && header.startsWith("Bearer"))
 				return header.replace("Bearer ", "");

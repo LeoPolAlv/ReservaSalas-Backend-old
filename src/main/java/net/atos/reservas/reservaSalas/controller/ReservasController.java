@@ -8,8 +8,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +42,7 @@ import net.atos.reservas.reservaSalas.models.entity.User;
 //@PreAuthorize("hasAuthority('USER') OR hasAuthority('ADMIN')")
 public class ReservasController {
 
-	
-	//private final static Logger logger = LoggerFactory.getLogger(ReservasController.class);
+	private final static Logger logger = LoggerFactory.getLogger(ReservasController.class);
 
 	@Autowired
 	IReservasService reservaService;
@@ -64,8 +63,9 @@ public class ReservasController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@PostMapping(path = "/new")
 	public ResponseEntity<?> NuevaReserva(@RequestBody ReservaRequest reservaRequest) {
+		logger.info("ReservaRequest: " + reservaRequest);
 		try {
-			//logger.info("ReservaRequest: " + reservaRequest);
+			
 			
 			// buscamos los datos exactos de cada una de las dos entidades
 			Room room = roomService.findRoom(reservaRequest.getRoomName());
@@ -82,6 +82,7 @@ public class ReservasController {
 
 			return new ResponseEntity<Long>(nuevaReserva.getIdreserve(), HttpStatus.OK);
 		} catch (Exception e) {
+			logger.info("ReservaRequest: " + reservaRequest);
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
