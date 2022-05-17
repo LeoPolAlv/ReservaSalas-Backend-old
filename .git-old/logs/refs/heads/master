@@ -1,3 +1,0 @@
-0000000000000000000000000000000000000000 9cd652a0d664e180a71286766b3b93a7d04fe70f AbiPol <leo.polanco@gmail.com> 1645031247 +0000	clone: from https://github.gsissc.myatos.net/A101753/ReservaSalas-Backend.git
-9cd652a0d664e180a71286766b3b93a7d04fe70f f857bba09a4db0e3f7c2e07b2748b992e4115970 AbiPol <leo.polanco@gmail.com> 1645118444 +0000	commit: Incluir campo Activa en la tabla Reservas para indicar si una reserva esta activa o no
-f857bba09a4db0e3f7c2e07b2748b992e4115970 e7220f82ff9064471e60af3b33d2eaeb862cf963 AbiPol <leo.polanco@gmail.com> 1645548419 +0000	merge DESA-1: Fast-forward
