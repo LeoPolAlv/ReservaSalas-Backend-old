@@ -1,6 +1,7 @@
 package net.atos.reservas.reservaSalas.models.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,8 +30,16 @@ public class Reservas implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idreserve;
 
-	//Indica si una reserva esta aciva
+	//Indica si una reserva esta activa
 	private boolean activa;
+	
+	private Date fechaReserva;
+	
+	private Date fechaHasta;
+	
+	private String titulo;
+	
+	private String descripcion;
 	
 	@OneToMany(mappedBy = "reserved", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "reserve-alerts")
@@ -46,9 +55,9 @@ public class Reservas implements Serializable {
 	@JsonBackReference(value = "room-reserves")
 	private Room room;
 
-	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
+	/*@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "owner-reserves")
-	private Set<TramosReservas> tramosReserva;
+	private Set<TramosReservas> tramosReserva;*/
 
 	/**
 	 * 

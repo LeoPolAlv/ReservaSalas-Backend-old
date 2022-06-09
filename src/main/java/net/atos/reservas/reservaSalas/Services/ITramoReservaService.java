@@ -1,4 +1,7 @@
-package net.atos.reservas.reservaSalas.Services;
+/*
+ * ANULAMOS SERVICIO YA QUE SE ANULAN TABLAS TRAMOS RESERVAS Y TRAMOS HORAS
+ */
+/*package net.atos.reservas.reservaSalas.Services;
 
 import java.util.Date;
 import java.util.List;
@@ -21,4 +24,4 @@ public interface ITramoReservaService {
 	
 	public List<TramosHoras> buscoTramosPorFecha(Reservas reserva, Date fecha);
 	
-}
+}*/

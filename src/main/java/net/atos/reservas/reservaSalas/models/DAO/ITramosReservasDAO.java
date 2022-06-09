@@ -1,4 +1,7 @@
-package net.atos.reservas.reservaSalas.models.DAO;
+/*
+ * ANULAMOS TABLA
+ */
+/*package net.atos.reservas.reservaSalas.models.DAO;
 
 import java.util.Date;
 import java.util.List;
@@ -20,4 +23,4 @@ public interface ITramosReservasDAO extends JpaRepository<TramosReservas, Long> 
 	@Query("SELECT tr.tramosHoras  FROM TramosReservas tr WHERE tr.reserva = ?1 "
 			+ "AND tr.fechaReserva = ?2")
 	public List<TramosHoras> findTramosOcupados(Reservas reserva, Date fechaReser);
-}
+}*/

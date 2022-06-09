@@ -1,4 +1,8 @@
-package net.atos.reservas.reservaSalas.models.entity;
+/*
+ * SE ANULA YA QUE ESTA INFORMACION VA EN LA TABLA DE RESERVAS
+ */
+
+/*package net.atos.reservas.reservaSalas.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -37,14 +41,14 @@ public class TramosReservas implements Serializable {
 	@JsonBackReference(value = "owner-reserves")
 	private Reservas reserva;
 
-	@ManyToOne(optional = false)
+	/*@ManyToOne(optional = false)
 	@JoinColumn(name = "FK_Tramo")
 	@JsonBackReference(value = "owner-tramo")
-	private TramosHoras tramosHoras;
+	private TramosHoras tramosHoras;*/
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 
-}
+//}

@@ -1,4 +1,7 @@
-package net.atos.reservas.reservaSalas.Services.Impl;
+/*
+ * ANULADO SERVICIO
+ */
+/*package net.atos.reservas.reservaSalas.Services.Impl;
 
 import java.util.Date;
 import java.util.List;
@@ -49,7 +52,7 @@ public class TramoReservaServiceImpl implements ITramoReservaService {
 	}*/
 
 	
-	@Override
+	/*@Override
 	@Transactional(readOnly = true)
 	public List<TramosHoras> buscoTramosLibres(List<Integer> tramos) {
 		return tramosHoras.findByIdtramoNotIn(tramos);
@@ -66,4 +69,4 @@ public class TramoReservaServiceImpl implements ITramoReservaService {
 		return tramosReserva.findTramosOcupados(reserva, fecha);
 	}
 
-}
+}*/

@@ -1,4 +1,8 @@
-package net.atos.reservas.reservaSalas.models.entity;
+/*
+ * ANULAMOS ESTA TABLA EL TRAMO DE HORAS VA EN LA TABLA DE RESRVAS
+ */
+
+/*package net.atos.reservas.reservaSalas.models.entity;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -36,6 +40,6 @@ public class TramosHoras implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 
-}
+//}

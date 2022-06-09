@@ -1,4 +1,7 @@
-package net.atos.reservas.reservaSalas.controller;
+/*
+ * ANULAMOS CONTROLLER YA QUE SE ANULO LA TABLA TRAMOSHORAS
+ */
+/*package net.atos.reservas.reservaSalas.controller;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -53,7 +56,7 @@ public class TramosHorasController {
 		// primero buscamos la sala para ver que reservas tiene
 		Room salAux = roomService.findRoom(sala);
 		
-		logger.info("Sala econtrada: " + salAux);
+		logger.info("Sala encontrada: " + salAux);
 		
 		// Busco las reservas de la sala
 		List<Reservas> reservaAux = reservasService.buscoReservasSala(salAux);
@@ -83,4 +86,4 @@ public class TramosHorasController {
 		
 	}
 
-}
+}*/

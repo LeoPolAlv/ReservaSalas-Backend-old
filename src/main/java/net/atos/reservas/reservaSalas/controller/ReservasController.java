@@ -1,10 +1,9 @@
 package net.atos.reservas.reservaSalas.controller;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 //import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +27,13 @@ import net.atos.reservas.reservaSalas.DTO.ReservaRequest;
 import net.atos.reservas.reservaSalas.DTO.ReservaToFront;
 import net.atos.reservas.reservaSalas.Services.IReservasService;
 import net.atos.reservas.reservaSalas.Services.IRoomService;
-import net.atos.reservas.reservaSalas.Services.ITramoReservaService;
+//import net.atos.reservas.reservaSalas.Services.ITramoReservaService;
 import net.atos.reservas.reservaSalas.Services.IUserService;
-import net.atos.reservas.reservaSalas.models.DAO.ITramosHorasDAO;
+//import net.atos.reservas.reservaSalas.helpers.HelperClass;
+//import net.atos.reservas.reservaSalas.models.DAO.ITramosHorasDAO;
 import net.atos.reservas.reservaSalas.models.entity.Reservas;
 import net.atos.reservas.reservaSalas.models.entity.Room;
-import net.atos.reservas.reservaSalas.models.entity.TramosReservas;
+//import net.atos.reservas.reservaSalas.models.entity.TramosReservas;
 import net.atos.reservas.reservaSalas.models.entity.User;
 
 @RestController
@@ -53,11 +53,11 @@ public class ReservasController {
 	@Autowired
 	IUserService userService;
 
-	@Autowired
+	/*@Autowired
 	ITramoReservaService tramoReserva;
 
 	@Autowired
-	ITramosHorasDAO tramosHoras;
+	ITramosHorasDAO tramosHoras;*/
 
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
@@ -75,10 +75,10 @@ public class ReservasController {
 			Reservas nuevaReserva = reservaService.nuevaReserva(room, usuario);
 
 			// Cargamos datos de la fecha y horas de reserva
-			for (String tramoAux : reservaRequest.getTramos()) {
+			/*for (String tramoAux : reservaRequest.getTramos()) {
 				tramoReserva.nuevoTramo(reservaRequest.getFechaReserva(), tramosHoras.findByTramos(tramoAux),
 						nuevaReserva);
-			}
+			}*/
 
 			return new ResponseEntity<Long>(nuevaReserva.getIdreserve(), HttpStatus.OK);
 		} catch (Exception e) {
@@ -103,8 +103,8 @@ public class ReservasController {
 
 	public ReservaToFront findReserva(Long idReserva) {
 		List<String> listaEquipos = new ArrayList<String>();
-		List<String> listaTramos = new ArrayList<String>();
-		List<TramosReservas> listaTramosAux = new ArrayList<>();
+		//List<String> listaTramos = new ArrayList<String>();
+		//List<TramosReservas> listaTramosAux = new ArrayList<>();
 		Optional<Reservas> reservaAux = Optional.ofNullable(reservaService.buscoReserva(idReserva));
 
 		Room roomAux = reservaAux.get().getRoom();
@@ -122,28 +122,16 @@ public class ReservasController {
 			listaEquipos.add(equipo.getEquipment().getNombre());
 		});
 
-		//logger.info("(Findreserva)Lista Equipos: " + listaEquipos);
-		// reservaToFront = new ReservaToFront(roomAux.getRoomName(),
-		// roomAux.getCapacity(), nombreOficina, listaEquipos);
+		boolean activa = reservaAux.get().isActiva();
+		
+		String titulo = reservaAux.get().getTitulo();
+		String descripcion = reservaAux.get().getDescripcion();
+		
+		Date fechaReserva = reservaAux.get().getFechaReserva();
+		Date fechaHasta = reservaAux.get().getFechaHasta();
 
-		// Buscamos los tramos que tiene la reserva
-		listaTramosAux = tramoReserva.findTramos(reservaAux.get());
-
-		// Fecha de la reserva
-		Date fechaReserva = (Date) listaTramosAux.get(0).getFechaReserva();
-
-		// Tramos horarios reservados por sala
-		listaTramosAux.forEach(tramo -> {
-			listaTramos.add(tramo.getTramosHoras().getTramos());
-		});
-
-		return new ReservaToFront(idReserva, roomAux.getRoomName(), roomAux.getCapacity(), nombreOficina, paisOficina, listaEquipos,
-				new SimpleDateFormat("dd-MM-yyyy").format(fechaReserva),
-				listaTramos);
-
-		// return new ResponseEntity<ReservaToFront>(reservaToFront,HttpStatus.OK);
-		// }
-		// return reservaToFront;
+		return new ReservaToFront(idReserva, activa, roomAux.getRoomName(), roomAux.getCapacity(), nombreOficina, paisOficina, titulo, descripcion, listaEquipos,
+				fechaReserva, fechaHasta);
 	}
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
@@ -155,11 +143,34 @@ public class ReservasController {
 		
 		Optional<User> reservasUser = userService.findUserByDAS(dasUser);
 
-		reservasUser.get().getReserves().forEach(reserva -> {
+		/*reservasUser.get().getReserves().forEach(reserva -> {
 			listaReservas.add(this.findReserva(reserva.getIdreserve()));
-		});
+		});*/
 		//Ordenamos la lista de reservas que se envia al front
 		listaReservas.sort(Comparator.comparing(ReservaToFront::getFechaReserva));
+		
+		return new ResponseEntity<List<ReservaToFront>>(listaReservas, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
+	@GetMapping(path = "/findbysala/{nombreSala}")
+	public ResponseEntity<?> findReservasSala(@PathVariable String nombreSala){
+		//logger.info("Nombre sala: " + nombreSala);
+		//HelperClass datosAFront = new HelperClass();
+		List<ReservaToFront> listaReservas = new ArrayList<ReservaToFront>();
+		List<Reservas> reservasAux = new ArrayList<Reservas>();
+		
+		Room salaAux = roomService.findRoom(nombreSala);
+		
+		//logger.info("Sala buscada: " + salaAux.getRoomName());
+		
+		reservasAux = reservaService.buscoReservasSala(salaAux);
+		
+		reservasAux.forEach(reserva -> {
+			//logger.info("Nombre reserva: " + reserva.getTitulo());
+			listaReservas.add(this.findReserva(reserva.getIdreserve()));
+			//listaReservas.add(datosAFront.convertToFront(reserva.getIdreserve()));
+		});
 		
 		return new ResponseEntity<List<ReservaToFront>>(listaReservas, HttpStatus.OK);
 	}

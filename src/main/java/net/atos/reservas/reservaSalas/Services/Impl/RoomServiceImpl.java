@@ -29,7 +29,7 @@ public class RoomServiceImpl implements IRoomService {
 	public Room findRoom(String nombreSala) {
 		return roomDao.findByRoomName(nombreSala);
 	}
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<Room> findRoomsOffice(Oficinas oficina) {

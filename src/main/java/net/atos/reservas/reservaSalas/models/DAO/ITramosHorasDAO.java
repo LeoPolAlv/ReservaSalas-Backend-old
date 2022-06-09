@@ -1,4 +1,7 @@
-package net.atos.reservas.reservaSalas.models.DAO;
+/*
+ * ANULAMOS TABLA
+ */
+/*package net.atos.reservas.reservaSalas.models.DAO;
 
 import java.util.List;
 
@@ -14,4 +17,4 @@ public interface ITramosHorasDAO extends JpaRepository<TramosHoras, Integer> {
 
 	public List<TramosHoras> findByIdtramoNotIn(List<Integer> tramos);
 	
-}
+}*/

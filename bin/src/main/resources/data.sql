@@ -56,9 +56,16 @@ INSERT IGNORE INTO reservedb.user (`id_user`,`das_user`,`email`,`estado_user`,`m
            (3,'A00001','A00001@gmail.com','1','0','0','$2a$10$emecYT7Y35DnbM0PVqwlt.j7fgu9Dv697Ee895iaUgn4I.vAE//L6','ROLE_USER',1),
            (4,'A00002','A00002@gmail.com','1','0','0','$2a$10$rHtwjAOvR1eYcpGU6IMvd.zt3ECxsezU/3kdPetyTexmRzhBpnMw.','ROLE_USER',3);
 
-
+--*** RESERVA
+INSERT IGNORE INTO reservedb.reservas (`idreserve`, `activa`, `descripcion`, `titulo`, `id_user`, `room_reference`) 
+    VALUES (1, 1, 'Reserva prueba 1', CAST('20220603' AS datetime), 'Reunion 1', 'A00001', 1),
+		   (2, 1, 'Reserva prueba 2', CAST('20220603' AS datetime), 'Reunion 2', 'A00001', 1),
+		   (3, 1, 'Reserva prueba 3', CAST('20220604' AS datetime), 'Reunion 3', 'A00002', 2),
+		   (4, 1, 'Reserva prueba 4', CAST('20220604' AS datetime), 'Reunion 4', 'A00002', 2);
+		   
+--** CURRENT_TIMESTAMP()
 --*** Tramos Horarios de reservas																																	  
-INSERT IGNORE  INTO reservedb.tramo_horas (`idtramo`,`tramo_horario`) VALUES (1,'8:00'),
+/*INSERT IGNORE  INTO reservedb.tramo_horas (`idtramo`,`tramo_horario`) VALUES (1,'8:00'),
 												                     (2,'8:30'),
 												                     (3,'9:00'),
 												                     (4,'9:30'),
@@ -71,3 +78,4 @@ INSERT IGNORE  INTO reservedb.tramo_horas (`idtramo`,`tramo_horario`) VALUES (1,
 												                     (11,'13:30'),
 												                     (12,'14:00'),
 												                     (13,'14:30');
+*/

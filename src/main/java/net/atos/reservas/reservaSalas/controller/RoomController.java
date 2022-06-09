@@ -32,6 +32,18 @@ public class RoomController {
 	
 	private ConversorTipos conversorTipos;
 	
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
+	@GetMapping(path="/findall") 
+    public ResponseEntity<?> findAllsRooms(){
+		try {
+			return new ResponseEntity <List<Room>>(roomService.findAllRooms(), HttpStatus.OK);   
+					
+		} catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@GetMapping(path="/find/{namesala}") 
     public ResponseEntity<?> findRoom(@PathVariable String namesala){
