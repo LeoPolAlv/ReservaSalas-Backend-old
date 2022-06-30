@@ -3,7 +3,8 @@ INSERT IGNORE INTO `reservedb`.`pais` (`id_pais`, `country_name`) VALUES (1, 'Es
                                                                  (2, 'Francia'),
 																 (3, 'Gran Bretaña'),
 																 (4, 'Portugal'),
-																 (5, 'Italia');
+																 (5, 'Italia'),
+																 (6, 'Estados Unidos');
 
 
 --******** Equipment
@@ -17,17 +18,18 @@ INSERT IGNORE INTO `reservedb`.`equipamientos` (`idequipment`, `codigo`, `descri
 																							   (8, 'codigo8', 'Equipo prueba 8', 'equipo 8');
 																							   
 --- ***** Office
-INSERT IGNORE INTO `reservedb`.`oficinas` (`idoffice`, `officename`, `fk_country`) VALUES (1, 'Tenerife', 1),
-                                                                                 (2, 'Valladolid', 1),
-                                                                                 (3, 'Madrid', 1),
-                                                                                 (4, 'Paris', 2),
-																				 (5, 'Toulousse', 2),
-																				 (6, 'Londres', 3),
-																				 (7, 'Roma', 5),
-																				 (8, 'Milan', 5),
-																				 (9, 'Lisboa', 4),
-																				 (10, 'Oporto', 4);
-
+INSERT IGNORE INTO `reservedb`.`oficinas` (`idoffice`, `officename`, `fk_country`, `cod_postal`, `direccion`, `latitud`, `localidad`, `longitud`, `provincia`) 
+       VALUES (1, 'Atos', 1,'47151','C. Andres Laguna 9-11','41.527657750232734','Boecillo','-4.72288531735084','Valladolid'),
+	          (2, 'Bull & Atos technologies', 1,'47003','C. del León 1','41.66322390318605','Valladolid','-4.724945253706968','Valladolid'),
+			  (3, 'Atos', 1,'28037','C. de Albarracín 25','40.452204936023236','Madrid','-3.6348598062030795','Madrid'),
+			  (4, 'Atos', 1,'28042','Paseo Doce Estrellas 2','40.452204936023236','Madrid','-3.6348598062030795','Madrid'),
+			  (5, 'RIVER OUEST', 2,'95870','80 Quai Voltaire','49.29597937700274','Bezons','2.2503863980237995','Bezons'),
+			  (6, 'Atos', 2,'31300','Les Espaces St Martin 6 Imp Alice Guy','43.88151339368778','Toulouse','1.4373981828048448','Toulouse'),
+			  (7, 'Atos It Solutions And Services, Unipessoal, Lda', 4,'1070-062','Avda. José Malhoa 16','38.75247971102245','Lisboa','-9.168899335423577','Lisboa'),
+			  (8, 'Atos', 6,'75063','4851 Regent Blvd','35.19176692266165','Irving','-96.39397097585169','Irving'),
+			  (9, 'Atos Consulting Canarias', 1,'38110','Subida al Mayorazgo 24B','28.445411592359694','Santa Cruz de Tenerife','-16.286383351596328','Tenerife');
+																				
+																							
 --**** Room
 INSERT IGNORE INTO `reservedb`.`room` (`idroom`, `capacity`, `roomname`, `fk_office`) VALUES (1, '52', 'Sala 1', 1),
 																					  (2, '52', 'Sala 2', 1),

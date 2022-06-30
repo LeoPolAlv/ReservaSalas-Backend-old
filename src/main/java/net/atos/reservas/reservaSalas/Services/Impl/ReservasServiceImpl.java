@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.atos.reservas.reservaSalas.DTO.ReservaRequest;
 import net.atos.reservas.reservaSalas.Services.IReservasService;
 import net.atos.reservas.reservaSalas.models.DAO.IReservasDAO;
 import net.atos.reservas.reservaSalas.models.entity.Reservas;
@@ -20,13 +21,17 @@ public class ReservasServiceImpl implements IReservasService {
 	
 	@Override
 	@Transactional
-	public Reservas nuevaReserva(Room room, User usuario) {
+	public Reservas nuevaReserva(Room room, User usuario, ReservaRequest reservaRequest) {
 		// TODO Auto-generated method stub
 		Reservas nuevareserva = new Reservas();
 
 		nuevareserva.setRoom(room);
 		nuevareserva.setActiva(true);
 		nuevareserva.setOwner(usuario);
+		nuevareserva.setFechaReserva(reservaRequest.getFechaReserva());
+		nuevareserva.setFechaHasta(reservaRequest.getFechaHasta());
+		nuevareserva.setTitulo(reservaRequest.getTitulo());
+		nuevareserva.setDescripcion(reservaRequest.getDescripcion());
 		nuevareserva.setAlerts(null);
 
 		return reservaDao.save(nuevareserva);

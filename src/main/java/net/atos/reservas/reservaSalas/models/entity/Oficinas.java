@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,18 +35,39 @@ public class Oficinas implements Serializable {
 	private Integer idoffice;
 
 	private String officename;
+	
+	//Direccion donde esta ubicada la oficina
+	private String direccion;
+	
+	//Localidad ubicacion oficina
+	private String localidad;
+	
+	//CP postal Oficina
+	private String codPostal;
+	
+	//Provincia de la localidad de la oficcina
+	private String provincia;
+	
+	//Coordenas de la ubicacion de la oficina
+	// ---- Longitud
+	private String longitud;
+	//---- Longitud
+	private String latitud;	
 
 	@OneToMany(mappedBy = "office", cascade = CascadeType.ALL)
 	@JsonManagedReference(value = "office-room")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Set<Room> rooms;
 
 	@OneToMany(mappedBy = "office")
 	@JsonManagedReference(value = "office-owner")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Set<User> users;
 
 	@ManyToOne
 	@JoinColumn(name = "FK_country")
 	@JsonBackReference(value = "country-office")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Pais country;
 
 	/**

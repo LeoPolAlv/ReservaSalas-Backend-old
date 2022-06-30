@@ -16,7 +16,14 @@ public class ReservaRequest {
 
 	@NonNull
 	private Date fechaReserva;
-
+	
 	@NonNull
-	private String[] tramos;
+	private Date fechaHasta;
+	
+	@NonNull
+	private String titulo;
+	
+	@NonNull
+	private String descripcion;
+
 }

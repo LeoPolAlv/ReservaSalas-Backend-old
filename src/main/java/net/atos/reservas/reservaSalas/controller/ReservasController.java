@@ -65,14 +65,12 @@ public class ReservasController {
 	public ResponseEntity<?> NuevaReserva(@RequestBody ReservaRequest reservaRequest) {
 		logger.info("ReservaRequest: " + reservaRequest);
 		try {
-			
-			
 			// buscamos los datos exactos de cada una de las dos entidades
 			Room room = roomService.findRoom(reservaRequest.getRoomName());
 			User usuario = userService.findUserByDAS(reservaRequest.getDasUser()).get();
 
 			// cargamos la reserva con los datos de sala y usuario
-			Reservas nuevaReserva = reservaService.nuevaReserva(room, usuario);
+			Reservas nuevaReserva = reservaService.nuevaReserva(room, usuario, reservaRequest);
 
 			// Cargamos datos de la fecha y horas de reserva
 			/*for (String tramoAux : reservaRequest.getTramos()) {
