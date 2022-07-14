@@ -1,5 +1,6 @@
 package net.atos.reservas.reservaSalas.Services.Impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,13 @@ public class ReservasServiceImpl implements IReservasService {
 	@Override
 	public List<Reservas> buscoReservasSala(Room sala) {
 		return reservaDao.findByRoom(sala);
+	}
+
+	@Override
+	@Transactional
+	public void modificoFechasReserva(Date fechaReserva, Date fechaHasta, Long id) {
+		// TODO Auto-generated method stub
+		reservaDao.actualizarFechaReserva(fechaReserva, fechaHasta, id);
 	}
 
 }

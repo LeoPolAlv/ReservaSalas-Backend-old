@@ -1,6 +1,6 @@
 package net.atos.reservas.reservaSalas.Services;
 
-
+import java.util.Date;
 import java.util.List;
 
 import net.atos.reservas.reservaSalas.DTO.ReservaRequest;
@@ -17,4 +17,6 @@ public interface IReservasService {
 	public Reservas buscoReserva(Long idreserva);
 	
 	public List<Reservas> buscoReservasSala(Room sala);
+	
+	public void modificoFechasReserva(Date fechaReserva, Date fechaHasta, Long id);
 }
