@@ -2,6 +2,7 @@ package net.atos.reservas.reservaSalas.Services;
 
 import java.util.List;
 
+import net.atos.reservas.reservaSalas.models.entity.Oficinas;
 import net.atos.reservas.reservaSalas.models.entity.Pais;
 
 public interface IPaisService {
@@ -13,6 +14,8 @@ public interface IPaisService {
 	public Pais buscoPais(Pais country);
 
 	public Pais buscoNombrePais(String nombrePais);
+	
+	public Pais buscoPaisOficina(Oficinas oficina);
 
 	public void borraCountry(Integer id);
 

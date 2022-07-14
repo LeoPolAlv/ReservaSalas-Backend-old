@@ -67,7 +67,7 @@ public class Oficinas implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "FK_country")
 	@JsonBackReference(value = "country-office")
-	@JsonProperty(access = Access.WRITE_ONLY)
+	//@JsonProperty(access = Access.WRITE_ONLY)
 	private Pais country;
 
 	/**

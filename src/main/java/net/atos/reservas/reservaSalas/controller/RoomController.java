@@ -30,7 +30,7 @@ public class RoomController {
 	@Autowired
 	private IOficinasService oficinasService;
 	
-	private ConversorTipos conversorTipos;
+	//private ConversorTipos conversorTipos;
 	
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
@@ -44,7 +44,7 @@ public class RoomController {
 		}
 	}
 	
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
+	/*@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@GetMapping(path="/find/{namesala}") 
     public ResponseEntity<?> findRoom(@PathVariable String namesala){
 	  
@@ -52,22 +52,22 @@ public class RoomController {
 	  
 		  //if (roomAux != null) { 
 			  return new ResponseEntity<RoomToFront>(conversorTipos.roomToFront(roomAux),HttpStatus.OK); 
-		  /*} else { 
+		  } else { 
 			  mensajeToFront.setCodigoError("R0004");
 			  mensajeToFront.setClaseError("/findromm");
 			  mensajeToFront.setMensaje("La sala " + namesala + " no esta registrada en el sistema"); 
 			  return new ResponseEntity<ExceptionToFront>(mensajeToFront,HttpStatus.NOT_FOUND); 
-		  } */
+		  } 
 	  }
 	  catch(Exception e) { 
 		  return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST); 
 	  } 
-    } 
+    } */
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
-	@GetMapping(path="/findrooms/{namesala}") 
-	public ResponseEntity<?> findRoomsPorOficina( @PathVariable String namesala){
-		Oficinas oficina = oficinasService.findOffice(namesala);
+	@GetMapping(path="/findrooms/{idOficina}") 
+	public ResponseEntity<?> findRoomsPorOficina( @PathVariable Integer idOficina){
+		Oficinas oficina = oficinasService.findOffice(idOficina);
 		
 		return new ResponseEntity<List<Room>>(roomService.findRoomsOffice(oficina),HttpStatus.OK)  ;
 	}

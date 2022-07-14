@@ -9,7 +9,7 @@ public interface IOficinasService {
 
 	public List<Oficinas> findByCountry(Pais country);
 
-	public Oficinas findOffice(String OficinaName);
+	public Oficinas findOffice(Integer oficinaId);
 
 	public List<Oficinas> findAllOffices();
 

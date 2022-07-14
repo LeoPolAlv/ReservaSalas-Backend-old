@@ -62,4 +62,14 @@ public class OficinasController {
 		return new ResponseEntity<List<String>>(listaOficinas, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
+	@GetMapping("/{idOficina}")
+	public ResponseEntity<?> buscarOficina(@PathVariable Integer idOficina){
+		try {
+			return new ResponseEntity<Oficinas>(oficinasService.findOffice(idOficina),HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

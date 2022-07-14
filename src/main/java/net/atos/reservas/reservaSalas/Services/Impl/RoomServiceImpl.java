@@ -1,6 +1,7 @@
 package net.atos.reservas.reservaSalas.Services.Impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,12 @@ public class RoomServiceImpl implements IRoomService {
 	@Transactional
 	public void deleteRoom(Room sala) {
 		roomDao.delete(sala);
+	}
+
+	@Override
+	public Optional<Room> findRoomById(Integer id) {
+		// TODO Auto-generated method stub
+		return roomDao.findById(id);
 	}
 
 }

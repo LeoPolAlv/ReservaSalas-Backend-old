@@ -72,7 +72,7 @@ public class UserController {
 	}
 
 	
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	/*@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@PostMapping(path = "/new")
 	public ResponseEntity<?> nuevoUser(@RequestBody User usuario) {
 
@@ -103,7 +103,7 @@ public class UserController {
 
 		return new ResponseEntity<User>(userNew, HttpStatus.OK);
 	}
-
+*/
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@DeleteMapping(path = "/delete")
 	public ResponseEntity<?> deleteUser(@RequestBody User userFront) {

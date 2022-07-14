@@ -11,7 +11,7 @@ import net.atos.reservas.reservaSalas.models.entity.Pais;
 @Repository
 public interface IOficinasDAO extends JpaRepository<Oficinas, Integer> {
 
-	public Oficinas findByOfficename(String OfficeName);
+	public Oficinas findByIdoffice(Integer idoffice);
 
 	public List<Oficinas> findByCountry(Pais country);
 	

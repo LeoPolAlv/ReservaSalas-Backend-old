@@ -66,11 +66,11 @@ public class ReservasController {
 		logger.info("ReservaRequest: " + reservaRequest);
 		try {
 			// buscamos los datos exactos de cada una de las dos entidades
-			Room room = roomService.findRoom(reservaRequest.getRoomName());
+			Optional<Room> room = roomService.findRoomById(reservaRequest.getRoomId());
 			User usuario = userService.findUserByDAS(reservaRequest.getDasUser()).get();
 
 			// cargamos la reserva con los datos de sala y usuario
-			Reservas nuevaReserva = reservaService.nuevaReserva(room, usuario, reservaRequest);
+			Reservas nuevaReserva = reservaService.nuevaReserva(room.get(), usuario, reservaRequest);
 
 			// Cargamos datos de la fecha y horas de reserva
 			/*for (String tramoAux : reservaRequest.getTramos()) {
@@ -151,23 +151,17 @@ public class ReservasController {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
-	@GetMapping(path = "/findbysala/{nombreSala}")
-	public ResponseEntity<?> findReservasSala(@PathVariable String nombreSala){
-		//logger.info("Nombre sala: " + nombreSala);
-		//HelperClass datosAFront = new HelperClass();
+	@GetMapping(path = "/findbysala/{idSala}")
+	public ResponseEntity<?> findReservasSala(@PathVariable Integer idSala){
 		List<ReservaToFront> listaReservas = new ArrayList<ReservaToFront>();
 		List<Reservas> reservasAux = new ArrayList<Reservas>();
 		
-		Room salaAux = roomService.findRoom(nombreSala);
+		Optional<Room> salaAux = roomService.findRoomById(idSala);
 		
-		//logger.info("Sala buscada: " + salaAux.getRoomName());
-		
-		reservasAux = reservaService.buscoReservasSala(salaAux);
+		reservasAux = reservaService.buscoReservasSala(salaAux.get());
 		
 		reservasAux.forEach(reserva -> {
-			//logger.info("Nombre reserva: " + reserva.getTitulo());
 			listaReservas.add(this.findReserva(reserva.getIdreserve()));
-			//listaReservas.add(datosAFront.convertToFront(reserva.getIdreserve()));
 		});
 		
 		return new ResponseEntity<List<ReservaToFront>>(listaReservas, HttpStatus.OK);

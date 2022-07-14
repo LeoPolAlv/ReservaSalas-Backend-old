@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,10 +47,12 @@ public class Room implements Serializable {
 
 	@OneToMany(mappedBy = "room")
 	@JsonManagedReference(value = "room-roomEquipment")
+	//@JsonProperty(access = Access.WRITE_ONLY)
 	private List<RoomEquipment> equipment;
 
 	@OneToMany(mappedBy = "room")
 	@JsonManagedReference(value = "room-reserves")
+	//@JsonProperty(access = Access.WRITE_ONLY)
 	private List<Reservas> reserves;
 
 	/**

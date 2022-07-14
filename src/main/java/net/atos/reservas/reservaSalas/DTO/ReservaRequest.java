@@ -9,7 +9,7 @@ import lombok.NonNull;
 public class ReservaRequest {
 
 	@NonNull
-	private String roomName;
+	private Integer roomId;
 
 	@NonNull
 	private String dasUser;

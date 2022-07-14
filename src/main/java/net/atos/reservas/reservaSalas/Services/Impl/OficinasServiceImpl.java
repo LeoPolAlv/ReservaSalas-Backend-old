@@ -26,8 +26,8 @@ public class OficinasServiceImpl implements IOficinasService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Oficinas findOffice(String OficinaName) {
-		return officeDao.findByOfficename(OficinaName);
+	public Oficinas findOffice(Integer oficinaId) {
+		return officeDao.findByIdoffice(oficinaId);
 	}
 
 	@Override
