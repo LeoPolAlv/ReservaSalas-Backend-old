@@ -44,22 +44,22 @@ public class OficinasController {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
-	@GetMapping("/country/{paisName}")
-	public ResponseEntity<?> oficinasPorPais(@PathVariable String paisName){
+	@GetMapping("/country/{idpais}")
+	public ResponseEntity<?> oficinasPorPais(@PathVariable Integer idpais){
 	
 		listaOficinas = new ArrayList<String>();
 		
-		Pais paisAux = paisService.buscoNombrePais(paisName);
+		Pais paisAux = paisService.buscoPais(idpais).get();
 		
 		//logger.info("Pais encontrado: ", paisAux);
 		
 		List<Oficinas> oficinas = oficinasService.findByCountry(paisAux);
 		
-		oficinas.forEach(oficina -> {
-			listaOficinas.add(oficina.getOfficename());
-		});
+		//oficinas.forEach(oficina -> {
+		//	listaOficinas.add(oficina.getOfficename());
+		//});
 		
-		return new ResponseEntity<List<String>>(listaOficinas, HttpStatus.OK);
+		return new ResponseEntity<List<Oficinas>>(oficinas, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")

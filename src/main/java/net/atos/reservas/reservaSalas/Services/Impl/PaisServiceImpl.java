@@ -1,6 +1,7 @@
 package net.atos.reservas.reservaSalas.Services.Impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,10 +34,9 @@ public class PaisServiceImpl implements IPaisService {
 		return this.iPaisDao.save(datosPais);
 	}
 
-	@Override
 	@Transactional(readOnly = true)
-	public Pais buscoPais(Pais country) {
-		return iPaisDao.findByCountryName(country.getCountryName());
+	public Optional<Pais> buscoPais(Integer idPais) {
+		return iPaisDao.findById(idPais);
 	}
 	
 	@Override

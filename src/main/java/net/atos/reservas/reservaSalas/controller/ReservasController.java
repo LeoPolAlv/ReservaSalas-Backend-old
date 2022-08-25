@@ -147,7 +147,7 @@ public class ReservasController {
 		//Set<ReservaToFront> listaReservasAux = new HashSet<>();
 		List<ReservaToFront> listaReservas = new ArrayList<ReservaToFront>();
 		
-		Optional<User> reservasUser = userService.findUserByDAS(dasUser);
+		//Optional<User> reservasUser = userService.findUserByDAS(dasUser);
 
 		/*reservasUser.get().getReserves().forEach(reserva -> {
 			listaReservas.add(this.findReserva(reserva.getIdreserve()));

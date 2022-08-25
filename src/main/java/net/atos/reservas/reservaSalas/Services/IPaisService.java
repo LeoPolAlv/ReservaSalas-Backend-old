@@ -1,6 +1,7 @@
 package net.atos.reservas.reservaSalas.Services;
 
 import java.util.List;
+import java.util.Optional;
 
 import net.atos.reservas.reservaSalas.models.entity.Oficinas;
 import net.atos.reservas.reservaSalas.models.entity.Pais;
@@ -11,7 +12,7 @@ public interface IPaisService {
 
 	public Pais newCountry(Pais datosPais);
 
-	public Pais buscoPais(Pais country);
+	public Optional<Pais> buscoPais(Integer idpais);
 
 	public Pais buscoNombrePais(String nombrePais);
 	

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.atos.reservas.reservaSalas.DTO.RoomToFront;
 import net.atos.reservas.reservaSalas.Services.IOficinasService;
 import net.atos.reservas.reservaSalas.Services.IRoomService;
 import net.atos.reservas.reservaSalas.models.entity.Oficinas;
@@ -43,26 +42,6 @@ public class RoomController {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	/*@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
-	@GetMapping(path="/find/{namesala}") 
-    public ResponseEntity<?> findRoom(@PathVariable String namesala){
-	  
-	  try { Room roomAux = roomService.findRoom(namesala);
-	  
-		  //if (roomAux != null) { 
-			  return new ResponseEntity<RoomToFront>(conversorTipos.roomToFront(roomAux),HttpStatus.OK); 
-		  } else { 
-			  mensajeToFront.setCodigoError("R0004");
-			  mensajeToFront.setClaseError("/findromm");
-			  mensajeToFront.setMensaje("La sala " + namesala + " no esta registrada en el sistema"); 
-			  return new ResponseEntity<ExceptionToFront>(mensajeToFront,HttpStatus.NOT_FOUND); 
-		  } 
-	  }
-	  catch(Exception e) { 
-		  return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST); 
-	  } 
-    } */
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@GetMapping(path="/findrooms/{idOficina}") 
