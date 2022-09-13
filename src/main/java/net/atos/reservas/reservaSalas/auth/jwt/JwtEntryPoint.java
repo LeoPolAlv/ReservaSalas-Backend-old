@@ -1,8 +1,6 @@
 package net.atos.reservas.reservaSalas.auth.jwt;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +16,12 @@ import org.springframework.security.web.AuthenticationEntryPoint;
  */
 import org.springframework.stereotype.Component;
 
+/*
+ * 
+ * Esta clase se utiliza para comprobar las credenciales en el login.
+ * 
+ */
+
 @Component
 public class JwtEntryPoint implements AuthenticationEntryPoint {
 
@@ -27,12 +31,12 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest req, HttpServletResponse res, AuthenticationException authException)
 			throws IOException, ServletException {
 
-		//logger.error("Error en el metodo commence en clase JwtEntryPoint: " + authException.getMessage());
+		logger.error("Error en el metodo commence en clase JwtEntryPoint: " + authException.getMessage());
 		//logger.error("Mensaje de error que me llega: " + authException.getMessage());
 		//logger.error("Mensaje de error que me llega: " + IOException.class);
 		
-        res.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getLocalizedMessage());
-		//res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        //res.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getLocalizedMessage());
+        res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Credenciales Erróneas");
 	}
 
 }

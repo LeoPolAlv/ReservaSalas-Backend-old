@@ -83,6 +83,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(getAuthenticationProvider());
     }
 
+	/*
+	 * Se configuran todas las opciones de seguridad del proyecto
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// Desactivamos cookies ya que enviamos un token cada vez que hacemos una petición

@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,7 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import net.atos.reservas.reservaSalas.auth.entity.UserAuth;
 
-/**
+/*
  * Clase que genera el token y valida que este bien formado y no este expirado
  */
 
@@ -28,12 +29,18 @@ public class JwtProvider {
 
 		
 		// Variable que se usa para la firma de seguridad
-		private String secret = "ATOSRESERVAS";
+		//private String secret = "ATOSRESERVAS";
 		
 		private String rol = "roles";
 
 		// tiempo de expiración serial (1 hora) tiempo en seg
-		private int expiration = 3600;
+		//private int expiration = 3600;
+		
+	   @Value("${jwt.secret}")
+	    private String secret;
+
+	   @Value("${jwt.expiration}")
+	    private int expiration;
 
 		public String generateToken(Authentication authentication) {
 			UserAuth usuarioMain = (UserAuth) authentication.getPrincipal();

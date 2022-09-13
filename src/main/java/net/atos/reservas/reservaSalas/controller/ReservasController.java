@@ -68,12 +68,6 @@ public class ReservasController {
 			// cargamos la reserva con los datos de sala y usuario
 			Reservas nuevaReserva = reservaService.nuevaReserva(room.get(), usuario, reservaRequest);
 
-			// Cargamos datos de la fecha y horas de reserva
-			/*for (String tramoAux : reservaRequest.getTramos()) {
-				tramoReserva.nuevoTramo(reservaRequest.getFechaReserva(), tramosHoras.findByTramos(tramoAux),
-						nuevaReserva);
-			}*/
-
 			return new ResponseEntity<Long>(nuevaReserva.getIdreserve(), HttpStatus.OK);
 		} catch (Exception e) {
 			logger.info("ReservaRequest: " + reservaRequest);
@@ -109,8 +103,6 @@ public class ReservasController {
 
 	public ReservaToFront findReserva(Long idReserva) {
 		List<String> listaEquipos = new ArrayList<String>();
-		//List<String> listaTramos = new ArrayList<String>();
-		//List<TramosReservas> listaTramosAux = new ArrayList<>();
 		Optional<Reservas> reservaAux = Optional.ofNullable(reservaService.buscoReserva(idReserva));
 
 		Room roomAux = reservaAux.get().getRoom();
@@ -135,23 +127,25 @@ public class ReservasController {
 		
 		Date fechaReserva = reservaAux.get().getFechaReserva();
 		Date fechaHasta = reservaAux.get().getFechaHasta();
+		
+		String userReserva = reservaAux.get().getOwner().getDasUser(); 
 
 		return new ReservaToFront(idReserva, activa, roomAux.getRoomName(), roomAux.getCapacity(), nombreOficina, paisOficina, titulo, descripcion, listaEquipos,
-				fechaReserva, fechaHasta);
+				fechaReserva, fechaHasta, userReserva);
 	}
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@GetMapping(path = "/find/{dasUser}")
 	public ResponseEntity<?> findReserva(@PathVariable String dasUser) {
-		//logger.info("Entro a buscar reservas del usuario: " + dasUser);
+		logger.info("Entro a buscar reservas del usuario: " + dasUser);
 		//Set<ReservaToFront> listaReservasAux = new HashSet<>();
 		List<ReservaToFront> listaReservas = new ArrayList<ReservaToFront>();
 		
-		//Optional<User> reservasUser = userService.findUserByDAS(dasUser);
+		Optional<User> reservasUser = userService.findUserByDAS(dasUser);
 
-		/*reservasUser.get().getReserves().forEach(reserva -> {
+		reservasUser.get().getReserves().forEach(reserva -> {
 			listaReservas.add(this.findReserva(reserva.getIdreserve()));
-		});*/
+		});
 		//Ordenamos la lista de reservas que se envia al front
 		listaReservas.sort(Comparator.comparing(ReservaToFront::getFechaReserva));
 		

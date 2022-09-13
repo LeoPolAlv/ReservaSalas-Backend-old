@@ -42,4 +42,7 @@ public class ReservaToFront {
 
 	@NonNull
 	private Date fechaHasta;
+	
+	@NonNull
+	private String userReserva;
 }
