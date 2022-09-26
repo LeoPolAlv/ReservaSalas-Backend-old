@@ -13,6 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
+
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -28,11 +32,15 @@ import lombok.Setter;
 @Table(name = "oficinas") //, indexes = { @Index(name = "officename_inx", columnList = "officename", unique = true) })
 @NoArgsConstructor
 @Getter @Setter
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Oficinas implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idoffice;
+	
+	@Version
+	private Long version;
 
 	private String officename;
 	

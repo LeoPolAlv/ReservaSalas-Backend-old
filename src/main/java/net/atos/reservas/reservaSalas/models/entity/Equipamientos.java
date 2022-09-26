@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -23,12 +27,16 @@ import lombok.Setter;
 @Table(name = "equipamientos", indexes = @Index(columnList = "codigo", name = "equipment_inx_codigo", unique = true), uniqueConstraints = @UniqueConstraint(columnNames = {
 		"codigo", "nombre" }))
 @Getter @Setter
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Equipamientos implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idequipment;
 
+	@Version
+	private Long version;
+	
 	private String codigo;
 
 	private String nombre;

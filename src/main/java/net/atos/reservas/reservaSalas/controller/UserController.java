@@ -43,10 +43,11 @@ public class UserController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@GetMapping(path = "/find/{user}")
 	public ResponseEntity<?> buscoUser(@PathVariable String user) {
-		logger.info("Entro en find User del controller");
 		try {
-				return new ResponseEntity<User>(userService.findUserByDAS(user).get(), HttpStatus.OK); 
+			logger.info("**[RESERVAS]--- Buscando usuario: " + user);
+			return new ResponseEntity<User>(userService.findUserByDAS(user).get(), HttpStatus.OK); 
 		} catch(Exception e) {
+			logger.info("**[RESERVAS]--- Error en la busqueda de usuario: " + user);
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}

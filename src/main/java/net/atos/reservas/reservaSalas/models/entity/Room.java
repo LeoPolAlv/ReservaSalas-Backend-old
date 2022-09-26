@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
+
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -24,6 +28,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "room")
 @Getter @Setter
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Room implements Serializable {
 
 
@@ -31,6 +36,9 @@ public class Room implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idroom;
 
+	@Version
+	private Long version;
+	
 	@Column(name = "roomname", nullable = false)
 	private String roomName;
 

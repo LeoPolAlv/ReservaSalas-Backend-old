@@ -11,7 +11,7 @@ public interface IPaisService {
 	public List<Pais> allPaises();
 
 	public Pais newCountry(Pais datosPais);
-
+	
 	public Optional<Pais> buscoPais(Integer idpais);
 
 	public Pais buscoNombrePais(String nombrePais);

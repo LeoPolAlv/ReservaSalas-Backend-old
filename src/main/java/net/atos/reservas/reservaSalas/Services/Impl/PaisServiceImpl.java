@@ -33,7 +33,8 @@ public class PaisServiceImpl implements IPaisService {
 	public Pais newCountry(Pais datosPais) {
 		return this.iPaisDao.save(datosPais);
 	}
-
+	
+	@Override
 	@Transactional(readOnly = true)
 	public Optional<Pais> buscoPais(Integer idPais) {
 		return iPaisDao.findById(idPais);

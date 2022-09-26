@@ -13,6 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
+
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -24,11 +28,21 @@ import lombok.Setter;
 @Table(name = "reservas") // , uniqueConstraints=@UniqueConstraint(columnNames={"id_user",
 							// "roomreference"}))
 @Getter @Setter
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Reservas implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idreserve;
+	
+	/*
+	 * Esto sirve para el control de operacion concurrentes en BD.
+	 * El bloqueo optimista utiliza la comparación de la suma de comprobación de la versión 
+	 * de los datos para garantizar que esta actualización sea la más reciente, 
+	 * de lo contrario fallará. Con un error OptimisticLockException
+	 */
+	@Version
+	private long version;  
 
 	//Indica si una reserva esta activa
 	private boolean activa;

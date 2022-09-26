@@ -11,10 +11,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.atos.reservas.reservaSalas.DTO.PaisRequest;
 import net.atos.reservas.reservaSalas.Services.IOficinasService;
 import net.atos.reservas.reservaSalas.Services.IPaisService;
 import net.atos.reservas.reservaSalas.models.entity.Oficinas;
@@ -32,7 +35,29 @@ public class PaisController {
 	
 	@Autowired
 	IOficinasService oficinasService;
+	
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@PostMapping(path="/new")
+	public ResponseEntity<?> nuevoPais(@RequestBody PaisRequest nombrePais){
+		logger.info("**[RESERVAS]--- Estamos creando un nuevo Pais");
+		logger.info("**[RESERVAS]--- Nombre Pais: " + nombrePais.getCountryName());
+		try {
+			Pais nuevoPais = new Pais();
+			
+			nuevoPais.setCountryName(nombrePais.getCountryName());
+			nuevoPais.setOffices(null);
+			
+			paisService.newCountry(nuevoPais);
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			logger.info("**[RESERVAS]--- Error crear nuevo Pais: " + e);
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+	}
 
+	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@GetMapping(path = "/all")
 	public ResponseEntity<?> buscoPaises() {

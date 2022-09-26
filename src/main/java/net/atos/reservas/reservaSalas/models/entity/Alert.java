@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
+
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -19,11 +23,15 @@ import lombok.Setter;
 @Entity
 @Table(name = "alert")
 @Getter @Setter
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Alert implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idalert;
+	
+	@Version
+	private Long version;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "das")

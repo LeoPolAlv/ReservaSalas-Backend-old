@@ -9,6 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -18,11 +22,15 @@ import lombok.Setter;
 @Entity
 @Table(name = "room_equipment", uniqueConstraints = @UniqueConstraint(columnNames = { "FKequipment", "FKroom" }))
 @Getter @Setter
+@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class RoomEquipment implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idroomeq;
+	
+	@Version
+	private Long version;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "FKequipment")

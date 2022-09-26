@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +58,8 @@ public class ReservasController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@PostMapping(path = "/new")
 	public ResponseEntity<?> NuevaReserva(@RequestBody ReservaRequest reservaRequest) {
-		logger.info("ReservaRequest: " + reservaRequest);
+		logger.info("**[RESERVAS]--- Estamos creeando una nueva reserva");
+		logger.info("**[RESERVAS]--- ReservaRequest: " + reservaRequest);
 		try {
 			// buscamos los datos exactos de cada una de las dos entidades
 			Optional<Room> room = roomService.findRoomById(reservaRequest.getRoomId());
@@ -70,7 +70,7 @@ public class ReservasController {
 
 			return new ResponseEntity<Long>(nuevaReserva.getIdreserve(), HttpStatus.OK);
 		} catch (Exception e) {
-			logger.info("ReservaRequest: " + reservaRequest);
+			logger.info("**[RESERVAS]--- Error al crear Reserva: " + reservaRequest + " - " + e.getMessage());
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -79,10 +79,12 @@ public class ReservasController {
 	@PutMapping(path="/nuevafecha")
 	public ResponseEntity<?> ModificarFechasReserva(@RequestBody PutFechasReservas nuevasFechas){
 		try {
+			logger.info("**[RESERVAS]--- Modificando fechas de Reserva: " + nuevasFechas);
 			reservaService.modificoFechasReserva(nuevasFechas.getFechaReserva(), nuevasFechas.getFechaHasta(), nuevasFechas.getReservaId());
 			return new ResponseEntity<>(HttpStatus.OK);
 					
 		} catch (Exception e) {
+			logger.info("**[RESERVAS]--- Error al modificar las fechas de la Reserva." + e.getMessage());
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -91,11 +93,13 @@ public class ReservasController {
 	@DeleteMapping(path = "/delete/{idReserva}")
 	public ResponseEntity<?> DeleteSalaEquipo(@PathVariable long idReserva) {
 		try {
+			logger.info("**[RESERVAS]--- Borrando reserva: " + idReserva);
 			Optional<Reservas> reservaAux = Optional.ofNullable(reservaService.buscoReserva(idReserva));
 			reservaService.borroReserva(reservaAux.get());
 			return new ResponseEntity<>(HttpStatus.OK);
 			
 		} catch (Exception e) {
+			logger.error("**[RESERVAS]--- Error en el borrado de reserva: " +  idReserva + "-" + e.getMessage());
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 
@@ -137,35 +141,54 @@ public class ReservasController {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@GetMapping(path = "/find/{dasUser}")
 	public ResponseEntity<?> findReserva(@PathVariable String dasUser) {
-		logger.info("Entro a buscar reservas del usuario: " + dasUser);
-		//Set<ReservaToFront> listaReservasAux = new HashSet<>();
-		List<ReservaToFront> listaReservas = new ArrayList<ReservaToFront>();
 		
-		Optional<User> reservasUser = userService.findUserByDAS(dasUser);
+		try {
+			logger.info("**[RESERVAS]--- Entro a buscar reservas del usuario: " + dasUser);
+			
+			List<ReservaToFront> listaReservas = new ArrayList<ReservaToFront>();
+			
+			Optional<User> reservasUser = userService.findUserByDAS(dasUser);
 
-		reservasUser.get().getReserves().forEach(reserva -> {
-			listaReservas.add(this.findReserva(reserva.getIdreserve()));
-		});
-		//Ordenamos la lista de reservas que se envia al front
-		listaReservas.sort(Comparator.comparing(ReservaToFront::getFechaReserva));
+			reservasUser.get().getReserves().forEach(reserva -> {
+				listaReservas.add(this.findReserva(reserva.getIdreserve()));
+			});
+			//Ordenamos la lista de reservas que se envia al front
+			listaReservas.sort(Comparator.comparing(ReservaToFront::getFechaReserva));
+			
+			return new ResponseEntity<List<ReservaToFront>>(listaReservas, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("**[RESERVAS]--- Error en la busqueda de reservas: " +  dasUser + "-" + e.getMessage());
+			
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 		
-		return new ResponseEntity<List<ReservaToFront>>(listaReservas, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') OR hasAuthority('ROLE_USER')")
 	@GetMapping(path = "/findbysala/{idSala}")
 	public ResponseEntity<?> findReservasSala(@PathVariable Integer idSala){
-		List<ReservaToFront> listaReservas = new ArrayList<ReservaToFront>();
-		List<Reservas> reservasAux = new ArrayList<Reservas>();
 		
-		Optional<Room> salaAux = roomService.findRoomById(idSala);
+		try {
+			logger.info("**[RESERVAS]--- Entro a buscar reservas de la sala: " + idSala);
+			
+			List<ReservaToFront> listaReservas = new ArrayList<ReservaToFront>();
+			List<Reservas> reservasAux = new ArrayList<Reservas>();
+			
+			Optional<Room> salaAux = roomService.findRoomById(idSala);
+			
+			reservasAux = reservaService.buscoReservasSala(salaAux.get());
+			
+			reservasAux.forEach(reserva -> {
+				listaReservas.add(this.findReserva(reserva.getIdreserve()));
+			});
+			
+			return new ResponseEntity<List<ReservaToFront>>(listaReservas, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			logger.error("**[RESERVAS]--- Error en la busqueda de reservas por sala: " +  idSala + "-" + e.getMessage());
+			
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 		
-		reservasAux = reservaService.buscoReservasSala(salaAux.get());
-		
-		reservasAux.forEach(reserva -> {
-			listaReservas.add(this.findReserva(reserva.getIdreserve()));
-		});
-		
-		return new ResponseEntity<List<ReservaToFront>>(listaReservas, HttpStatus.OK);
 	}
 }

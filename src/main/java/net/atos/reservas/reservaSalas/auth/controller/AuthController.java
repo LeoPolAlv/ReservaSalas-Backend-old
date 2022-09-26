@@ -1,7 +1,7 @@
 package net.atos.reservas.reservaSalas.auth.controller;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ import net.atos.reservas.reservaSalas.auth.jwt.JwtProvider;
 @CrossOrigin(origins = "*", methods = { RequestMethod.POST, RequestMethod.GET, RequestMethod.DELETE }, exposedHeaders = "**")
 public class AuthController {
 
-	//private final static Logger logger = LoggerFactory.getLogger(AuthController.class);
+	private final static Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 	private final AuthenticationManager authenticationManager;
 	private final JwtProvider jwtProvider;
@@ -39,9 +39,8 @@ public class AuthController {
 
 	@PostMapping(path = "/login")
 	public ResponseEntity<?> login(@Validated @RequestBody AuthenticationRequest authenticationRequest) {
-		/*logger.info("Iniciamos Login");
-		logger.info("Antes de autenticar manager");
-		logger.info("Authenticationrequest: " + authenticationRequest);*/
+		logger.info("**[RESERVAS]--- Iniciamos el Login");
+		logger.info("**[RESERVAS]--- Datos de entrada a Login: " + authenticationRequest);
 		//this.PasswordEncoderTest(authenticationRequest.getPassword());
 		
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -55,10 +54,12 @@ public class AuthController {
 
 		String token = jwtProvider.generateToken(authentication);
 		
-		//logger.info("Token generado");
+		logger.info("**[RESERVAS]--- Token generado");
 		
 		AuthenticationResponse respuesta = new AuthenticationResponse(true, token);
 
+		logger.info("**[RESERVAS]--- Respuesta login: ", respuesta.isOk());
+		
 		return new ResponseEntity<AuthenticationResponse>(respuesta, HttpStatus.OK);
 		
 	} 
