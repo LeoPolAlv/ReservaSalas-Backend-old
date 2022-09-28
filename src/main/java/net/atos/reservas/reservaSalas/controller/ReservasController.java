@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,7 @@ public class ReservasController {
 			// cargamos la reserva con los datos de sala y usuario
 			Reservas nuevaReserva = reservaService.nuevaReserva(room.get(), usuario, reservaRequest);
 
-			return new ResponseEntity<Long>(nuevaReserva.getIdreserve(), HttpStatus.OK);
+			return new ResponseEntity<Long>(nuevaReserva.getIdreserve(), HttpStatus.CREATED);
 		} catch (Exception e) {
 			logger.info("**[RESERVAS]--- Error al crear Reserva: " + reservaRequest + " - " + e.getMessage());
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -80,12 +81,13 @@ public class ReservasController {
 	public ResponseEntity<?> ModificarFechasReserva(@RequestBody PutFechasReservas nuevasFechas){
 		try {
 			logger.info("**[RESERVAS]--- Modificando fechas de Reserva: " + nuevasFechas);
-			reservaService.modificoFechasReserva(nuevasFechas.getFechaReserva(), nuevasFechas.getFechaHasta(), nuevasFechas.getReservaId());
-			return new ResponseEntity<>(HttpStatus.OK);
+			
+			return new ResponseEntity<Reservas>(reservaService.modificoFechasReserva(nuevasFechas.getFechaReserva(), nuevasFechas.getFechaHasta(), nuevasFechas.getReservaId())
+					                            ,HttpStatus.OK);
 					
 		} catch (Exception e) {
 			logger.info("**[RESERVAS]--- Error al modificar las fechas de la Reserva." + e.getMessage());
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_MODIFIED);
 		}
 	}
 	
@@ -94,8 +96,8 @@ public class ReservasController {
 	public ResponseEntity<?> DeleteSalaEquipo(@PathVariable long idReserva) {
 		try {
 			logger.info("**[RESERVAS]--- Borrando reserva: " + idReserva);
-			Optional<Reservas> reservaAux = Optional.ofNullable(reservaService.buscoReserva(idReserva));
-			reservaService.borroReserva(reservaAux.get());
+			//Optional<Reservas> reservaAux = Optional.ofNullable(reservaService.buscoReserva(idReserva));
+			reservaService.borroReserva(idReserva);
 			return new ResponseEntity<>(HttpStatus.OK);
 			
 		} catch (Exception e) {

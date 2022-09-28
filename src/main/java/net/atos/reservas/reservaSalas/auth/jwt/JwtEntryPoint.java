@@ -37,6 +37,7 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
 		
         //res.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getLocalizedMessage());
         res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Credenciales Erróneas");
+        return;
 	}
 
 }

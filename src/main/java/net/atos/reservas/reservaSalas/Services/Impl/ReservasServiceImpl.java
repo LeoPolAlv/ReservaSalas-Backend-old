@@ -23,6 +23,17 @@ public class ReservasServiceImpl implements IReservasService {
 	IReservasDAO reservaDao;
 	
 	@Override
+	//@Transactional(readOnly = true)
+	public Reservas buscoReserva(Long idreserva) {
+		return reservaDao.findByIdreserve(idreserva);
+	}
+
+	@Override
+	public List<Reservas> buscoReservasSala(Room sala) {
+		return reservaDao.findByRoom(sala);
+	}
+	
+	@Override
 	@Transactional
 	public Reservas nuevaReserva(Room room, User usuario, ReservaRequest reservaRequest) {
 		// TODO Auto-generated method stub
@@ -42,26 +53,19 @@ public class ReservasServiceImpl implements IReservasService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
-	public void borroReserva(Reservas reserva) {
+	public void borroReserva(Long idReserva) {
+		Reservas reserva = reservaDao.findByIdreserve(idReserva);
 		reservaDao.delete(reserva);
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public Reservas buscoReserva(Long idreserva) {
-		return reservaDao.findByIdreserve(idreserva);
-	}
-
-	@Override
-	public List<Reservas> buscoReservasSala(Room sala) {
-		return reservaDao.findByRoom(sala);
-	}
-
-	@Override
 	@Transactional
-	public void modificoFechasReserva(Date fechaReserva, Date fechaHasta, Long id) {
-		// TODO Auto-generated method stub
-		reservaDao.actualizarFechaReserva(fechaReserva, fechaHasta, id);
+	public Reservas modificoFechasReserva(Date fechaReserva, Date fechaHasta, Long idReserva) {
+			Reservas reserva = reservaDao.findByIdreserve(idReserva);
+			reservaDao.actualizarFechaReserva(fechaReserva, fechaHasta, reserva.getIdreserve());
+			// Retorna la reserva modificada
+			return reserva = reservaDao.findByIdreserve(idReserva);
+		
 	}
 
 }

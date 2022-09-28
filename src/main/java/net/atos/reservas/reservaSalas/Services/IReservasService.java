@@ -9,14 +9,14 @@ import net.atos.reservas.reservaSalas.models.entity.Room;
 import net.atos.reservas.reservaSalas.models.entity.User;
 
 public interface IReservasService {
-
-	public Reservas nuevaReserva(Room room, User usuario, ReservaRequest reservaRequest);
-
-	public void borroReserva(Reservas reserva);
-
+	
 	public Reservas buscoReserva(Long idreserva);
 	
 	public List<Reservas> buscoReservasSala(Room sala);
+
+	public Reservas nuevaReserva(Room room, User usuario, ReservaRequest reservaRequest);
+
+	public void borroReserva(Long idReserva);
 	
-	public void modificoFechasReserva(Date fechaReserva, Date fechaHasta, Long id);
+	public Reservas modificoFechasReserva(Date fechaReserva, Date fechaHasta, Long id);
 }
